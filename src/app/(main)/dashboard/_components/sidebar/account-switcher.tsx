@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { logoutAction } from "@/server/auth-actions";
 import { cn, getInitials } from "@/lib/utils";
 
 export function AccountSwitcher({
@@ -71,7 +72,7 @@ export function AccountSwitcher({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => logoutAction()}>
           <LogOut />
           Log out
         </DropdownMenuItem>

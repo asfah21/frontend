@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
 import { Github } from "lucide-react";
@@ -14,6 +15,7 @@ import { SIDEBAR_COLLAPSIBLE_VALUES, SIDEBAR_VARIANT_VALUES } from "@/lib/prefer
 import { cn } from "@/lib/utils";
 import { getPreference } from "@/server/server-actions";
 
+import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth";
 import { AccountSwitcher } from "./_components/sidebar/account-switcher";
 import { LayoutControls } from "./_components/sidebar/layout-controls";
 import { SearchDialog } from "./_components/sidebar/search-dialog";
@@ -21,6 +23,21 @@ import { ThemeSwitcher } from "./_components/sidebar/theme-switcher";
 
 export default async function Layout({ children }: Readonly<{ children: ReactNode }>) {
   const cookieStore = await cookies();
+  const sessionToken = cookieStore.get(SESSION_COOKIE)?.value;
+  const session = sessionToken ? await verifySessionToken(sessionToken) : null;
+
+  if (!session) {
+    redirect("/auth/v1/login");
+  }
+
+  const user = {
+    id: "admin",
+    name: "Admin",
+    username: session!.username,
+    email: "admin@mavis.com",
+    avatar: "",
+    role: "administrator",
+  };
   const defaultOpen = cookieStore.get("sidebar_state")?.value !== "false";
   const [variant, collapsible] = await Promise.all([
     getPreference("sidebar_variant", SIDEBAR_VARIANT_VALUES, "inset"),
@@ -36,7 +53,7 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant={variant} collapsible={collapsible} />
+      <AppSidebar variant={variant} collapsible={collapsible} user={user} />
       <SidebarInset
         className={cn(
           "[html[data-content-layout=centered]_&>*]:mx-auto",
@@ -63,7 +80,7 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
             <div className="flex items-center gap-2">
               <LayoutControls />
               <ThemeSwitcher />
-              <Button asChild size="icon">
+              {/* <Button asChild size="icon">
                 <Link
                   prefetch={false}
                   href="https://github.com/arhamkhnz/next-shadcn-admin-dashboard"
@@ -73,8 +90,8 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
                 >
                   <Github />
                 </Link>
-              </Button>
-              <AccountSwitcher users={users} />
+              </Button> */}
+              <AccountSwitcher users={[user]} />
             </div>
           </div>
         </header>

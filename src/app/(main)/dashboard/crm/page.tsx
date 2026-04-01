@@ -1,16 +1,14 @@
-import { recentLeadsData } from "./_components/crm.config";
-import { InsightCards } from "./_components/insight-cards";
-import { OperationalCards } from "./_components/operational-cards";
-import { OverviewCards } from "./_components/overview-cards";
-import { RecentLeadsTable } from "./_components/recent-leads-table/table";
+import { ChartAreaInteractive } from "./_components/chart-area-interactive";
+import data from "./_components/data.json";
+import { ProposalSectionsTable } from "./_components/proposal-sections-table/table";
+import { SectionCards } from "./_components/section-cards";
 
 export default function Page() {
   return (
-    <div className="flex flex-col gap-4 md:gap-6">
-      <OverviewCards />
-      <InsightCards />
-      <OperationalCards />
-      <RecentLeadsTable data={recentLeadsData} />
+    <div className="@container/main flex flex-col gap-4 md:gap-6">
+      <SectionCards />
+      <ChartAreaInteractive />
+      <ProposalSectionsTable data={data} />
     </div>
   );
 }
