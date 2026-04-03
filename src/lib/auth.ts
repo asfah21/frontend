@@ -4,14 +4,12 @@
  *
  * Credentials:
  *   username : admin
- *   password : Aicam651@  (stored only as bcrypt hash below)
+ *   password : A**********@  (stored only as bcrypt hash below)
  */
 
 import * as bcrypt from "bcryptjs";
 import { jwtVerify, SignJWT } from "jose";
 
-// ─── Static credentials (no DB) ──────────────────────────────────────────────
-// Generated with: bcrypt.hashSync("Aicam651@", 12)
 const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD_HASH = "$2b$12$vvtS4LADiw2d/im0oN5EYOlvPYB./eszU8HTS01MDk4VlPXYyhOiy";
 
