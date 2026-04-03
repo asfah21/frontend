@@ -11,7 +11,7 @@ import * as bcrypt from "bcryptjs";
 import { jwtVerify, SignJWT } from "jose";
 
 const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD_HASH = "$2b$12$vvtS4LADiw2d/im0oN5EYOlvPYB./eszU8HTS01MDk4VlPXYyhOiy";
+const ADMIN_PASSWORD_HASH = "$2a$12$eOi6MHRtjpQrHuRSVwVlaeS2iuojCS.ue83RpcV5tWXh.2ZrLfVGG";
 
 // ─── JWT config ───────────────────────────────────────────────────────────────
 const JWT_SECRET_VALUE = process.env.JWT_SECRET ?? "visioncore-super-secret-key-change-in-production";
