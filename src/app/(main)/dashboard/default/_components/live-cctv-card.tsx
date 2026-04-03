@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Camera, Circle, Maximize2, ShieldAlert } from "lucide-react";
+
+import { Camera, Circle, ShieldAlert } from "lucide-react";
+
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 type Detection = {
@@ -134,7 +136,7 @@ export function LiveCctvCard({ className }: { className?: string }) {
   }, [detections]);
 
   return (
-    <Card className={cn("overflow-hidden flex flex-col pb-[11px]", className)}>
+    <Card className={cn("flex flex-col overflow-hidden pb-[11px]", className)}>
       <CardHeader>
         <div className="flex items-center gap-2">
           <Camera className="size-5 text-primary" />
@@ -142,10 +144,10 @@ export function LiveCctvCard({ className }: { className?: string }) {
           <CardAction>
             <Badge
               variant={isConnected ? "outline" : "destructive"}
-              className={cn("gap-1", isConnected && "text-green-500 border-green-500/30 bg-green-500/10")}
+              className={cn("gap-1", isConnected && "border-green-500/30 bg-green-500/10 text-green-500")}
             >
               <Circle
-                className={cn("size-2 fill-current animate-pulse", isConnected ? "text-green-500" : "text-destructive")}
+                className={cn("size-2 animate-pulse fill-current", isConnected ? "text-green-500" : "text-destructive")}
               />
               {isConnected ? "Live" : "Offline"}
             </Badge>
@@ -154,19 +156,19 @@ export function LiveCctvCard({ className }: { className?: string }) {
         {/* <CardDescription></CardDescription> */}
       </CardHeader>
 
-      <CardContent className="p-0 bg-black overflow-hidden relative flex-grow">
-        <div className="w-full relative h-full">
+      <CardContent className="relative flex-grow overflow-hidden bg-black p-0">
+        <div className="relative h-full w-full">
           <AspectRatio ratio={16 / 9} className="group overflow-hidden">
             <div
               ref={containerRef}
               style={{
                 border: "1px solid #222",
               }}
-              className="absolute inset-0 w-full h-full z-10"
+              className="absolute inset-0 z-10 h-full w-full"
             >
               <iframe
                 src="http://10.10.11.5:1984/stream.html?src=cam1"
-                className="w-full h-full border-none grayscale-[0.1] transition-all group-hover:grayscale-0"
+                className="h-full w-full border-none grayscale-[0.1] transition-all group-hover:grayscale-0"
                 title="CCTV Stream"
                 allow="autoplay; fullscreen"
                 allowFullScreen
@@ -174,13 +176,13 @@ export function LiveCctvCard({ className }: { className?: string }) {
 
               <canvas
                 ref={canvasRef}
-                className="absolute inset-0 w-full h-full pointer-events-none z-[100]"
+                className="pointer-events-none absolute inset-0 z-[100] h-full w-full"
                 style={{ width: "100%", height: "100%", display: "block" }}
               />
 
               {!isConnected && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm z-[120]">
-                  <ShieldAlert className="size-10 text-destructive mb-2" />
+                <div className="absolute inset-0 z-[120] flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm">
+                  <ShieldAlert className="mb-2 size-10 text-destructive" />
                   <p className="font-bold text-base text-white">Connection Lost</p>
                   <p className="text-[10px] text-zinc-400">Unable to reach the camera server</p>
                 </div>

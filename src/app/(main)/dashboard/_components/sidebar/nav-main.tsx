@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ChevronRight, Hand, HandFist, MailIcon, PlusCircleIcon, User2Icon } from "lucide-react";
+import { ChevronRight, Hand, User2Icon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -171,10 +171,10 @@ export function NavMain({ items }: NavMainProps) {
               </SidebarMenuButton>
               <Button
                 size="icon"
-                className="h-9 w-9 shrink-0 group-data-[collapsible=icon]:opacity-0 rounded-lg"
+                className="h-9 w-9 shrink-0 rounded-lg group-data-[collapsible=icon]:opacity-0"
                 variant="secondary"
               >
-                <Hand className="h-4 w-4 animate-wave origin-bottom-right" />
+                <Hand className="h-4 w-4 origin-bottom-right animate-wave" />
                 <span className="sr-only">Hello</span>
               </Button>
             </SidebarMenuItem>

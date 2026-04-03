@@ -4,10 +4,10 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import {
+  createSessionToken,
   REMEMBER_ME_MAX_AGE,
   SESSION_COOKIE,
   SESSION_MAX_AGE,
-  createSessionToken,
   validateCredentials,
 } from "@/lib/auth";
 

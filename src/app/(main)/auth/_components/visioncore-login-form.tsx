@@ -25,8 +25,8 @@ export function VisionCoreLoginForm() {
     <div className="flex flex-col gap-6">
       <form action={formAction} className="flex flex-col gap-2" noValidate>
         {/* Email/Username field */}
-        <div className="flex flex-col gap-2 mb-1">
-          <label className="text-sm font-medium text-foreground/90 px-0.5" htmlFor="vc-username">
+        <div className="mb-1 flex flex-col gap-2">
+          <label className="px-0.5 font-medium text-foreground/90 text-sm" htmlFor="vc-username">
             Username or Email
           </label>
           <div className="relative flex items-center">
@@ -34,7 +34,7 @@ export function VisionCoreLoginForm() {
               id="vc-username"
               name="username"
               type="text"
-              className="w-full px-4 py-2.5 bg-background border border-input rounded-lg text-[15px] text-foreground outline-none transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary placeholder:text-muted-foreground/50 [&:-webkit-autofill]:shadow-[0_0_0_1000px_inset_var(--background)] [&:-webkit-autofill]:text-fill-foreground"
+              className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-[15px] text-foreground outline-none transition-all placeholder:text-muted-foreground/50 focus:border-primary focus:ring-2 focus:ring-primary/20 [&:-webkit-autofill]:text-fill-foreground [&:-webkit-autofill]:shadow-[0_0_0_1000px_inset_var(--background)]"
               placeholder="admin"
               autoComplete="username"
               // biome-ignore lint/a11y/noAutofocus: intended for login page
@@ -46,8 +46,8 @@ export function VisionCoreLoginForm() {
         </div>
 
         {/* Password field */}
-        <div className="flex flex-col gap-2 mb-2">
-          <label className="text-sm font-medium text-foreground/90 px-0.5" htmlFor="vc-password">
+        <div className="mb-2 flex flex-col gap-2">
+          <label className="px-0.5 font-medium text-foreground/90 text-sm" htmlFor="vc-password">
             Password
           </label>
           <div className="relative flex items-center">
@@ -55,7 +55,7 @@ export function VisionCoreLoginForm() {
               id="vc-password"
               name="password"
               type={showPassword ? "text" : "password"}
-              className="w-full px-4 py-2.5 bg-background border border-input rounded-lg text-[15px] text-foreground outline-none transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary placeholder:text-muted-foreground/50 [&:-webkit-autofill]:shadow-[0_0_0_1000px_inset_var(--background)] [&:-webkit-autofill]:text-fill-foreground"
+              className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-[15px] text-foreground outline-none transition-all placeholder:text-muted-foreground/50 focus:border-primary focus:ring-2 focus:ring-primary/20 [&:-webkit-autofill]:text-fill-foreground [&:-webkit-autofill]:shadow-[0_0_0_1000px_inset_var(--background)]"
               placeholder="••••••••"
               autoComplete="current-password"
               required
@@ -63,7 +63,7 @@ export function VisionCoreLoginForm() {
             />
             <button
               type="button"
-              className="absolute right-3 text-muted-foreground/60 hover:text-foreground transition-colors"
+              className="absolute right-3 text-muted-foreground/60 transition-colors hover:text-foreground"
               onClick={() => setShowPassword((p) => !p)}
               aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
               tabIndex={-1}
@@ -74,14 +74,14 @@ export function VisionCoreLoginForm() {
         </div>
 
         {/* Remember Me */}
-        <div className="flex items-center gap-2.5 mb-6 px-0.5">
+        <div className="mb-6 flex items-center gap-2.5 px-0.5">
           <input
             type="checkbox"
             id="remember"
             name="remember"
             className="h-4 w-4 rounded border-input bg-background text-primary focus:ring-primary/30"
           />
-          <label htmlFor="remember" className="text-sm font-medium text-muted-foreground/80 cursor-pointer select-none">
+          <label htmlFor="remember" className="cursor-pointer select-none font-medium text-muted-foreground/80 text-sm">
             Remember me for 30 days
           </label>
         </div>
@@ -89,7 +89,7 @@ export function VisionCoreLoginForm() {
         {/* Error message inline */}
         {state?.error && (
           <div
-            className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-sm text-destructive font-medium animate-in fade-in zoom-in-95"
+            className="fade-in zoom-in-95 mb-4 animate-in rounded-lg border border-destructive/20 bg-destructive/10 p-3 font-medium text-destructive text-sm"
             role="alert"
           >
             {state.error}
@@ -100,7 +100,7 @@ export function VisionCoreLoginForm() {
         <button
           id="vc-login-submit"
           type="submit"
-          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-primary hover:opacity-90 active:scale-[0.98] transition-all text-primary-foreground font-semibold rounded-lg shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 font-semibold text-primary-foreground shadow-sm transition-all hover:opacity-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           disabled={isPending}
         >
           {isPending ? (
@@ -114,11 +114,13 @@ export function VisionCoreLoginForm() {
         </button>
       </form>
 
-      <div className="relative text-center text-sm my-1">
+      <div className="relative my-1 text-center text-sm">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border/60" />
+          <span className="w-full border-border/60 border-t" />
         </div>
-        <span className="relative z-10 bg-background px-3 text-muted-foreground/60">PT. Gunung Samudera Internasional</span>
+        <span className="relative z-10 bg-background px-3 text-muted-foreground/60">
+          PT. Gunung Samudera Internasional
+        </span>
       </div>
 
       {/* Google Button

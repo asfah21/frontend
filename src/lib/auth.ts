@@ -8,7 +8,7 @@
  */
 
 import * as bcrypt from "bcryptjs";
-import { SignJWT, jwtVerify } from "jose";
+import { jwtVerify, SignJWT } from "jose";
 
 // ─── Static credentials (no DB) ──────────────────────────────────────────────
 // Generated with: bcrypt.hashSync("Aicam651@", 12)

@@ -54,7 +54,7 @@
         "noUndeclaredVariables": "error"
       },
       "nursery": {
-        "useSortedClasses": "on"
+        "useSortedClasses": "off"
       },
       "performance": {
         "noImgElement": "warn"

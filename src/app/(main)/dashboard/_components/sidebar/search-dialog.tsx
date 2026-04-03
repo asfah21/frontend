@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 
-import { ChartBar, Forklift, Gauge, GraduationCap, LayoutDashboard, Search, ShoppingBag, User2Icon, Users } from "lucide-react";
+import { Gauge, LayoutDashboard, Search, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,7 +22,7 @@ const searchItems = [
   // { group: "Dashboards", icon: ShoppingBag, label: "E-Commerce", disabled: true },
   // { group: "Dashboards", icon: GraduationCap, label: "Academy", disabled: true },
   // { group: "Dashboards", icon: Forklift, label: "Logistics", disabled: true },
-  { group: "Pages", icon: Users, label: "Users", disabled: true},
+  { group: "Pages", icon: Users, label: "Users", disabled: true },
   // { group: "Pages", label: "Login v2" },
   // { group: "Authentication", label: "Register v1" },
   // { group: "Authentication", label: "Register v2" },
