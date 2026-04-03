@@ -27,7 +27,7 @@ export function VisionCoreLoginForm() {
         {/* Email/Username field */}
         <div className="flex flex-col gap-2 mb-1">
           <label className="text-sm font-medium text-foreground/90 px-0.5" htmlFor="vc-username">
-            Email Address
+            Username or Email
           </label>
           <div className="relative flex items-center">
             <input
@@ -35,7 +35,7 @@ export function VisionCoreLoginForm() {
               name="username"
               type="text"
               className="w-full px-4 py-2.5 bg-background border border-input rounded-lg text-[15px] text-foreground outline-none transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary placeholder:text-muted-foreground/50 [&:-webkit-autofill]:shadow-[0_0_0_1000px_inset_var(--background)] [&:-webkit-autofill]:text-fill-foreground"
-              placeholder="you@example.com"
+              placeholder="admin"
               autoComplete="username"
               // biome-ignore lint/a11y/noAutofocus: intended for login page
               autoFocus
@@ -118,7 +118,7 @@ export function VisionCoreLoginForm() {
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t border-border/60" />
         </div>
-        <span className="relative z-10 bg-background px-3 text-muted-foreground/60">or</span>
+        <span className="relative z-10 bg-background px-3 text-muted-foreground/60">PT. Gunung Samudera Internasional</span>
       </div>
 
       {/* Google Button

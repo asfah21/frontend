@@ -1,6 +1,6 @@
-# Contributing to MAVIS
+# Contributing to GAVIS
 
-Thanks for showing interest in improving **MAVIS** (repo: `next-shadcn-admin-dashboard`).  
+Thanks for showing interest in improving **GAVIS** (repo: `next-shadcn-admin-dashboard`).  
 This guide will help you set up your environment and understand how to contribute.
 
 ---

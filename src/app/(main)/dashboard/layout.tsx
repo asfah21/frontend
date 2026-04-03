@@ -34,7 +34,7 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
     id: "admin",
     name: "Admin",
     username: session!.username,
-    email: "admin@mavis.com",
+    email: "admin@GAVIS.com",
     avatar: "",
     role: "administrator",
   };

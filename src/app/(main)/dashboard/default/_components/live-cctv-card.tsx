@@ -134,7 +134,7 @@ export function LiveCctvCard({ className }: { className?: string }) {
   }, [detections]);
 
   return (
-    <Card className={cn("overflow-hidden flex flex-col", className)}>
+    <Card className={cn("overflow-hidden flex flex-col pb-[11px]", className)}>
       <CardHeader>
         <div className="flex items-center gap-2">
           <Camera className="size-5 text-primary" />

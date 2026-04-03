@@ -21,8 +21,8 @@ export default function LoginV1Page() {
           <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md shadow-xl border border-white/20">
             <Command className="h-9 w-9 text-white" />
           </div>
-          <h1 className="mb-3 text-5xl font-semibold tracking-tight text-white line-tight">MAVIS</h1>
-          <p className="text-lg text-blue-100/80 font-medium">Modern AI Vision for Intelligent Surveillance</p>
+          <h1 className="mb-3 text-5xl font-semibold tracking-tight text-white line-tight">GAVIS</h1>
+          <p className="text-lg text-blue-100/80 font-medium">GSI AI Vision for Intelligent Surveillance</p>
         </div>
 
         {/* Floating Decorative Elements */}
@@ -38,7 +38,7 @@ export default function LoginV1Page() {
           <div className="mb-10 text-center">
             <h2 className="text-xl font-bold text-foreground tracking-tight mb-3">Login</h2>
             <p className="text-[15px] leading-relaxed text-muted-foreground max-w-[320px] mx-auto">
-              Welcome back. Enter your email and password, let&apos;s hope you remember them this time.
+              Welcome back, please enter your username or email and password to login
             </p>
           </div>
 

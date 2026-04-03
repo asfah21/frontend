@@ -11,7 +11,7 @@ export const leadsChartData = [
 
 export const leadsChartConfig = {
   newLeads: {
-    label: "New Leads",
+    label: "People",
     color: "var(--chart-1)",
   },
   disqualified: {

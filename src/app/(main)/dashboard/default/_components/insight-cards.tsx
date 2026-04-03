@@ -18,7 +18,12 @@ export function InsightCards() {
 
   return (
     <div className="grid grid-cols-1 gap-4 *:data-[slot=card]:shadow-xs sm:grid-cols-2 xl:grid-cols-5">
-      <Card className="col-span-1 xl:col-span-2">
+      <Card className="relative overflow-hidden col-span-1 xl:col-span-2">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/30 backdrop-blur-[6px]">
+          <div className="rounded-full bg-primary/20 px-6 py-2 text-sm font-bold tracking-widest text-gray-400 uppercase border border-primary/40 shadow-2xl">
+            Soon
+          </div>
+        </div>
         <CardHeader>
           <CardTitle>Leads by Source</CardTitle>
         </CardHeader>
@@ -97,7 +102,12 @@ export function InsightCards() {
         </CardFooter>
       </Card>
 
-      <Card className="col-span-1 xl:col-span-3">
+      <Card className="relative overflow-hidden col-span-1 xl:col-span-3">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/30 backdrop-blur-[6px]">
+          <div className="rounded-full bg-primary/20 px-6 py-2 text-sm font-bold tracking-widest text-gray-400 uppercase border border-primary/40 shadow-2xl">
+            Soon
+          </div>
+        </div>
         <CardHeader>
           <CardTitle>Project Revenue vs. Target</CardTitle>
         </CardHeader>

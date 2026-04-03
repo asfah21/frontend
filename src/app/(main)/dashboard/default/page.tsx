@@ -17,7 +17,7 @@ export default function Page() {
       <div className="grid grid-cols-1 gap-4">
         <InsightCards />
         {/* <OperationalCards /> */}
-        <RecentLeadsTable data={recentLeadsData} />
+        {/* <RecentLeadsTable data={recentLeadsData} /> */}
       </div>
     </div>
   );
