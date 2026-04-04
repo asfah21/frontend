@@ -1,4 +1,4 @@
-import { Command } from "lucide-react";
+import { Aperture } from "lucide-react";
 import type { Metadata } from "next";
 
 import { VisionCoreLoginForm } from "../../_components/visioncore-login-form";
@@ -18,7 +18,7 @@ export default function LoginV1Page() {
 
         <div className="fade-in slide-in-from-bottom-4 relative z-10 flex animate-in flex-col items-center text-center duration-700">
           <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-white/10 shadow-xl backdrop-blur-md">
-            <Command className="h-9 w-9 text-white" />
+            <Aperture className="h-9 w-9 text-white" />
           </div>
           <h1 className="line-tight mb-3 font-semibold text-5xl text-white tracking-tight">GAVIS</h1>
           <p className="font-medium text-blue-100/80 text-lg">GSI AI Vision for Intelligent Surveillance</p>

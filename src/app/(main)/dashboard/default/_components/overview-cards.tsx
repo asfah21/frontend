@@ -97,14 +97,28 @@ export function OverviewCards({ className }: { className?: string }) {
         }));
         setDailyData(mappedDaily);
 
-        // Map API heatmap data to traffic chart format
-        const mappedTraffic = (h || []).map((item: { hour: number; count: number }) => ({
-          time: formatHour(item.hour),
-          total: item.count,
-          known: item.count, // Using full count to match UI naming "People"
-          unknown: 0,
-        }));
-        setHeatmapData(mappedTraffic);
+        // Map API heatmap data to traffic chart format for today (progressively per hour)
+        const currentHour = new Date().getHours();
+        const mappedTraffic = Array.from({ length: Math.max(1, currentHour + 1) }).map((_, i) => {
+          const apiItem = (h || []).find((x: { hour: number; count: number }) => x.hour === i);
+          const count = apiItem ? apiItem.count : 0;
+          return {
+            time: formatHour(i),
+            total: count,
+            known: count, // Using full count to match UI naming "People"
+            unknown: 0,
+          };
+        });
+
+        // Hapus jam yang nilainya nol beruntun agar X-axis tidak terlalu padat
+        const filteredTraffic = mappedTraffic.filter((item, i, arr) => {
+          if (item.known === 0 && i > 0 && arr[i - 1].known === 0) {
+            return false; // Skip jika sebelumnya sudah nol
+          }
+          return true;
+        });
+
+        setHeatmapData(filteredTraffic);
 
         // Find peak hour
         if (h && h.length > 0) {
@@ -241,12 +255,16 @@ export function OverviewCards({ className }: { className?: string }) {
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Peak Traffic</CardDescription>
-          <CardTitle className="font-semibold @[250px]/card:text-3xl text-2xl tabular-nums">
-            <span className="font-bold text-green-500">{peakHourInfo.count}</span>
-            <span className="font-normal text-sm">people</span>
+          <CardTitle className="pt-2 pb-1 font-semibold @[250px]/card:text-3xl text-2xl tabular-nums">
+            <span className="font-bold text-green-500 text-4xl">{peakHourInfo.count}</span>
+            <span className="font-normal text-sm"> people</span>
           </CardTitle>
           <CardAction>
-            <Badge variant="outline">
+            {/* <Badge variant="outline">
+              {growth >= 0 ? <TrendingUp className="text-green-500" /> : <TrendingDown className="text-red-500" />}
+              {growth >= 0 ? `+${growth}%` : `${growth}%`}
+            </Badge> */}
+            <Badge variant="outline" className={growth >= 0 ? "text-green-500" : "text-red-500"}>
               {growth >= 0 ? <TrendingUp className="text-green-500" /> : <TrendingDown className="text-red-500" />}
               {growth >= 0 ? `+${growth}%` : `${growth}%`}
             </Badge>

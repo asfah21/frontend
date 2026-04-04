@@ -1,4 +1,4 @@
-import { Gauge, LayoutDashboard, type LucideIcon, Users } from "lucide-react";
+import { Gauge, Info, LayoutDashboard, type LucideIcon, Users } from "lucide-react";
 
 export interface NavSubItem {
   title: string;
@@ -35,11 +35,6 @@ export const sidebarItems: NavGroup[] = [
         url: "/dashboard/default",
         icon: LayoutDashboard,
       },
-      // {
-      //   title: "CRM",
-      //   url: "/dashboard/crm",
-      //   icon: ChartBar,
-      // },
       // {
       //   title: "Finance",
       //   url: "/dashboard/finance",
@@ -112,6 +107,11 @@ export const sidebarItems: NavGroup[] = [
         url: "/dashboard/coming-soon",
         icon: Users,
         comingSoon: true,
+      },
+      {
+        title: "About",
+        url: "/dashboard/about",
+        icon: Info,
       },
       // {
       //   title: "Roles",
