@@ -6,15 +6,7 @@ import { format, subMonths } from "date-fns";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { Bar, BarChart, Line, LineChart, XAxis } from "recharts";
 
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
 
@@ -255,7 +247,10 @@ export function OverviewCards({ className }: { className?: string }) {
 
       <Card className="flex h-full flex-col @container/card">
         <CardHeader>
-          <CardDescription>Peak Traffic</CardDescription>
+          <div className="flex items-center justify-between">
+            <CardTitle>Peak Traffic</CardTitle>
+          </div>
+          {/* <CardDescription>Peak Traffic</CardDescription> */}
           <CardTitle className="pt-2 pb-1 font-semibold @[250px]/card:text-3xl text-2xl tabular-nums">
             <span className="font-bold text-green-500 text-4xl">{peakHourInfo.count}</span>
             <span className="font-normal text-sm"> people</span>

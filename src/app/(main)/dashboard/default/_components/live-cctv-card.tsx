@@ -103,20 +103,45 @@ export function LiveCctvCard({ className }: { className?: string }) {
 
       if (detections.length === 0) return;
 
+      // Kalkulasi offset letterbox/pillarbox karena iframe (webRTC player)
+      // melakukan 'object-fit: contain' bawaan saat masuk mode Fullscreen
+      const frameW = detections[0].frame_size?.w || 1920;
+      const frameH = detections[0].frame_size?.h || 1080;
+      const videoAspect = frameW / frameH;
+      const canvasAspect = canvas.width / canvas.height;
+
+      let drawW = canvas.width;
+      let drawH = canvas.height;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      // Pencocokan rasio layar vs video
+      if (canvasAspect > videoAspect) {
+        // Layar lebih lebar dari video (pillarbox) -> ada pita hitam di sisi Kiri dan Kanan
+        drawH = canvas.height;
+        drawW = canvas.height * videoAspect;
+        offsetX = (canvas.width - drawW) / 2;
+      } else {
+        // Layar lebih tinggi dari video (letterbox) -> ada pita hitam di sisi Atas dan Bawah
+        drawW = canvas.width;
+        drawH = canvas.width / videoAspect;
+        offsetY = (canvas.height - drawH) / 2;
+      }
+
       // 🔥 ITERASI SEMUA DETECTIONS SESUAI REFERENSI
       detections.forEach((d) => {
         if (!d.bbox || !d.frame_size) return;
 
         const { x1, y1, x2, y2 } = d.bbox;
 
-        // SCALING PROSES
-        const scaleX = canvas.width / (d.frame_size.w || 1);
-        const scaleY = canvas.height / (d.frame_size.h || 1);
+        // SCALING PROSES berdasarkan dimensi video aktif, BUKAN dimensi fullscreen HP
+        const scaleX = drawW / (d.frame_size.w || 1);
+        const scaleY = drawH / (d.frame_size.h || 1);
 
-        const sx1 = x1 * scaleX;
-        const sy1 = y1 * scaleY;
-        const sx2 = x2 * scaleX;
-        const sy2 = y2 * scaleY;
+        const sx1 = offsetX + x1 * scaleX;
+        const sy1 = offsetY + y1 * scaleY;
+        const sx2 = offsetX + x2 * scaleX;
+        const sy2 = offsetY + y2 * scaleY;
 
         // WARNA SESUAI REFERENSI (LIME & RED)
         const color = d.name !== "Unknown" ? "lime" : "red";
@@ -170,7 +195,7 @@ export function LiveCctvCard({ className }: { className?: string }) {
               <Circle
                 className={cn("size-2 animate-pulse fill-current", isConnected ? "text-green-500" : "text-destructive")}
               />
-              {isConnected ? "Live" : "Offline"}
+              {isConnected ? "Online" : "Offline"}
             </Badge>
           </CardAction>
         </div>
