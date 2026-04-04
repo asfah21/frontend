@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Camera, Circle, ShieldAlert } from "lucide-react";
+import { Camera, Circle, Maximize, Minimize, ShieldAlert } from "lucide-react";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
@@ -19,8 +19,29 @@ type Detection = {
 export function LiveCctvCard({ className }: { className?: string }) {
   const [detections, setDetections] = useState<Detection[]>([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      containerRef.current?.requestFullscreen().catch((err) => {
+        console.error("Fullscreen error:", err);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   // ===== WEBSOCKET =====
   useEffect(() => {
@@ -170,9 +191,17 @@ export function LiveCctvCard({ className }: { className?: string }) {
                 src="http://10.10.11.5:1984/stream.html?src=cam1"
                 className="h-full w-full border-none grayscale-[0.1] transition-all group-hover:grayscale-0"
                 title="CCTV Stream"
-                allow="autoplay; fullscreen"
-                allowFullScreen
+                allow="autoplay"
               />
+
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                className="absolute right-2 top-2 z-[200] rounded-md bg-black/40 p-1.5 text-white/70 opacity-0 backdrop-blur-md transition-all hover:bg-black/80 hover:text-white group-hover:opacity-100"
+                aria-label="Toggle Fullscreen"
+              >
+                {isFullscreen ? <Minimize className="size-4" /> : <Maximize className="size-4" />}
+              </button>
 
               <canvas
                 ref={canvasRef}
