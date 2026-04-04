@@ -1,108 +1,41 @@
-# Next.js Admin Template with TypeScript & Shadcn UI
+# GAVIS (GSI AI Vision for Intelligent Surveillance)
 
-**GAVIS** - Includes multiple dashboards, authentication layouts, customizable theme presets, and more.
+**GAVIS** is an internal innovation initiative developed at Site Wolo, designed as a strategic alternative and benchmark to third-party AI-powered CCTV solutions. This project reflects our commitment to building a robust, intelligent, and fully controlled surveillance system tailored to the operational needs of our organization.
 
-<img src="https://github.com/arhamkhnz/next-shadcn-admin-dashboard/blob/main/media/dashboard.png?version=5" alt="Dashboard Screenshot">
+Unlike conventional vendor-based systems, GAVIS is developed internally, providing greater flexibility and adaptability. The platform is engineered to align with the specific conditions of our operational environments, allowing us to customize features, detection models, and system behavior based on real field requirements.
 
-Most admin templates I found, free or paid, felt cluttered, outdated, or too rigid. I built this as a cleaner alternative with features often missing in others, such as theme toggling and layout controls, while keeping the design modern, minimal, and flexible.
+## Key Advantages
 
-I’ve taken design inspiration from various sources. If you’d like credit for something specific, feel free to open an issue or reach out.
-
-> **View demo:** [GAVIS](https://next-shadcn-admin-dashboard.vercel.app)
-
-> [!TIP]
-> I’m also working on Nuxt.js, Svelte, and React (Vite + TanStack Router) versions of this dashboard. They’ll be live soon.
-
-## Features
-
-- Built with Next.js 16, TypeScript, Tailwind CSS v4, and Shadcn UI  
-- Responsive and mobile-friendly  
-- Customizable theme presets (light/dark modes with color schemes like Tangerine, Brutalist, and more)  
-- Flexible layouts (collapsible sidebar, variable content widths)  
-- Authentication flows and screens  
-- Prebuilt dashboards (Default, CRM, Finance) with more coming soon  
-- Role-Based Access Control (RBAC) with config-driven UI and multi-tenant support *(planned)*  
-
-> [!NOTE]
-> The default dashboard uses the **shadcn neutral** theme.  
-> It also includes additional color presets inspired by [Tweakcn](https://tweakcn.com):  
->
-> - Tangerine  
-> - Neo Brutalism  
-> - Soft Pop  
->
-> You can create more presets by following the same structure as the existing ones.
-
-> Looking for the **Next.js 15** version?  
-> Check out the [`archive/next15`](https://github.com/arhamkhnz/next-shadcn-admin-dashboard/tree/archive/next15) branch.  
-> This branch contains the setup prior to upgrading to Next 16 and the React Compiler.
-
-> Looking for the **Next.js 14 + Tailwind CSS v3** version?  
-> Check out the [`archive/next14-tailwindv3`](https://github.com/arhamkhnz/next-shadcn-admin-dashboard/tree/archive/next14-tailwindv3) branch.  
-> It has a different color theme and is not actively maintained, but I try to keep it updated with major changes.  
+- **Data Security**: By maintaining full ownership of the infrastructure and data processing pipeline, GAVIS eliminates dependency on third-party vendors, reducing exposure to external risks.
+- **Continuous Improvement**: We train and deploy our own AI models. This ensures that the system becomes increasingly accurate and context-aware over time, particularly in recognizing patterns, personnel, and activities unique to our sites.
+- **Long-term Efficiency**: Provides scalability, cost control, and seamless system integration without vendor limitations.
+- **Live Monitoring & Analytics**: Features live CCTV streams with AI bounding boxes, presence heatmaps, and peak traffic analytics.
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 (App Router), TypeScript, Tailwind CSS v4  
-- **UI Components**: Shadcn UI  
-- **Validation**: Zod  
-- **Forms & State Management**: React Hook Form, Zustand  
-- **Tables & Data Handling**: TanStack Table  
-- **Tooling & DX**: Biome, Husky  
+This project is built using modern web development standards and a responsive design system:
 
-## Screens
-
-### Available
-- Default Dashboard  
-- CRM Dashboard  
-- Finance Dashboard  
-- Authentication (4 screens)
-
-### Coming Soon
-- Analytics Dashboard  
-- eCommerce Dashboard  
-- Academy Dashboard  
-- Logistics Dashboard  
-- Email Page  
-- Chat Page  
-- Calendar Page  
-- Kanban Board  
-- Invoice Page  
-- Users Management  
-- Roles Management  
-
-## Colocation File System Architecture
-
-This project follows a **colocation-based architecture** each feature keeps its own pages, components, and logic inside its route folder.  
-Shared UI, hooks, and configuration live at the top level, making the codebase modular, scalable, and easier to maintain as the app grows.
-
-For a full breakdown of the structure with examples, see the [Next Colocation Template](https://github.com/arhamkhnz/next-colocation-template).
+- **Framework**: Next.js (App Router), TypeScript
+- **Styling**: Tailwind CSS v4
+- **UI Components**: Shadcn UI & Lucide Icons
+- **Real-time Data**: WebSocket for live AI detections and CCTV feeds
+- **Tooling**: Biome, Husky
 
 ## Getting Started
 
-You can run this project locally, or deploy it instantly with Vercel.
-
-### Deploy with Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Farhamkhnz%2Fnext-shadcn-admin-dashboard)
-
-_Deploy your own copy with one click._
-
-### Run locally
-
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/arhamkhnz/next-shadcn-admin-dashboard.git
+   git clone <internal-repo-url>
    ```
    
 2. **Navigate into the project**
    ```bash
-    cd next-shadcn-admin-dashboard
+   cd frontend
    ```
    
 3. **Install dependencies**
    ```bash
-    npm install
+   npm install
    ```
 
 4. **Start the development server**
@@ -110,24 +43,17 @@ _Deploy your own copy with one click._
    npm run dev
    ```
 
-Your app will be running at [http://localhost:3000](http://localhost:3000)
+Your app will be running at [http://localhost:3000](http://localhost:3000).
 
-### Formatting and Linting
+> **Note:** You must be connected to the internal network (or VPN) to receive data correctly from the Live CCTV server and WebSocket APIs (e.g., `http://10.10.11.5`).
 
-Format, lint, and organize imports
+## Formatting and Linting
+
+Format, lint, and organize imports:
 ```bash
 npx @biomejs/biome check --write
 ```
-> For more information on available rules, fixes, and CLI options, refer to the [Biome documentation](https://biomejs.dev/).
 
 ---
 
-> [!IMPORTANT]  
-> This project is updated frequently. If you’re working from a fork or an older clone, pull the latest changes before syncing. Some updates may include breaking changes.
-
----
-
-Contributions are welcome. Feel free to open issues, feature requests, or start a discussion.
-
-
-**Happy Vibe Coding!**
+We present this initiative as a forward-looking solution that prioritizes flexibility, security, and sustainability in modern surveillance systems.

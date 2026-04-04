@@ -1,14 +1,12 @@
 # Contributing to GAVIS
 
-Thanks for showing interest in improving **GAVIS** (repo: `next-shadcn-admin-dashboard`).  
-This guide will help you set up your environment and understand how to contribute.
+Thank you for your interest in improving **GAVIS** (GSI AI Vision for Intelligent Surveillance). This guide will help you set up your environment and understand how to contribute effectively to our internal initiative.
 
 ---
 
 ## Overview
 
-This project is built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, and **Shadcn UI**.  
-The goal is to keep the codebase modular, scalable, and easy to extend.
+GAVIS is built with **Next.js**, **TypeScript**, **Tailwind CSS v4**, and **Shadcn UI**. The goal is to keep the codebase modular, scalable, and easy to extend as we add more AI models and dashboard features.
 
 ---
 
@@ -19,53 +17,16 @@ We use a **colocation-based file system**. Each feature keeps its own pages, com
 ```
 src
 ├── app               # Next.js routes (App Router)
-│   ├── (auth)        # Auth layouts & screens
-│   ├── (main)        # Main dashboard routes
-│   │   └── (dashboard)
-│   │       ├── crm
-│   │       ├── finance
-│   │       ├── default
-│   │       └── ...
-│   └── layout.tsx
+│   ├── (main)        # Main routing group
+│   │   ├── auth      # Authentication layouts & screens
+│   │   └── dashboard # Dashboard screens (CCTV, Analytics, About)
+│   └── layout.tsx    # Root layout
 ├── components        # Shared UI components
 ├── hooks             # Reusable hooks
 ├── lib               # Config & utilities
-├── styles            # Tailwind / theme setup
-└── types             # TypeScript definitions
+├── server            # Server actions & utilities
+└── styles            # Tailwind / theme setup
 ```
-
-If you’d like a more detailed example of this setup, check out the [Next Colocation Template](https://github.com/arhamkhnz/next-colocation-template), where the full structure is explained with examples.
-
----
-
-## Getting Started
-
-### Fork and Clone the Repository
-
-1. Fork the Repository
-   
-   Click [here](https://github.com/arhamkhnz/next-shadcn-admin-dashboard/fork) to fork the repository.
-
-2. Clone the Repository  
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/next-shadcn-admin-dashboard.git
-   ```
-   
-3. Navigate into the Project  
-   ```bash
-   cd next-shadcn-admin-dashboard
-   ```
-
-4. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-5. **Run the dev server**
-   ```bash
-   npm run dev
-   ```
-   App will be available at [http://localhost:3000](http://localhost:3000).
 
 ---
 
@@ -78,50 +39,30 @@ If you’d like a more detailed example of this setup, check out the [Next Coloc
 
 - Use clear commit messages:
   ```bash
-  git commit -m "feat: add finance dashboard screen"
+  git commit -m "feat: integrate new person_detect_batch event"
   ```
 
-- Open a Pull Request once ready.
-- If your change adds a new UI screen or component, include a screenshot in your PR description.
-
----
-
-## Where to Contribute
-
-- **External Pages**: Landing pages or other non-dashboard routes → `src/app/(external)/`  
-- **Auth Screens**: Login, register, and authentication layouts → `src/app/(main)/auth/`  
-- **Dashboard Screens**: Feature dashboards like CRM, Finance, Analytics → `src/app/(main)/dashboard/`
-- **Components**: Reusable UI goes in `src/components/`  
-- **Hooks**: Custom logic goes in `src/hooks/`  
-- **Themes**: New presets under `src/styles/presets/`  
+- If your change adds a new UI screen or component, include a screenshot in your Pull Request description.
 
 ---
 
 ## Guidelines
 
-- Prefer **TypeScript types** over `any`
-- Husky pre-commit hooks are enabled - linting and formatting run automatically when you commit, and if there are errors the commit will be blocked until they are fixed. 
-- Follow **Shadcn UI** style & Tailwind v4 conventions
-- Keep accessibility in mind (ARIA, keyboard nav)
-- Use clear commit messages with conventional prefixes (`feat:`, `fix:`, `chore:`, etc.)
-- Avoid unnecessary dependencies — prefer existing utilities where possible
+- Prefer **TypeScript types** over `any`.
+- **Husky pre-commit hooks** are enabled - linting (via Biome) runs automatically when you commit. Ensure your code passes `npx @biomejs/biome check --write` before committing.
+- Follow the established **Shadcn UI** style & **Tailwind v4** conventions.
+- Make sure to test WebSocket configurations and CCTV layers properly when adjusting the `LiveCctvCard` or any `canvas` overlays.
+- Keep accessibility in mind (e.g., always provide `type="button"` for interactive buttons).
+- Maintain responsive grid proportions using standard Tailwind breakpoints (`md:`, `lg:`, `xl:`).
 
 ---
 
 ## Submitting PRs
 
-- Open a Pull Request once your changes are ready.  
-- Ensure your branch is up to date with `main` before submitting.  
-- Reference any related issue in your PR for context.
+- Open a Pull Request on the internal Git repository once your changes are ready.
+- Ensure your branch is up to date with `main` before submitting.
+- Reference any related internal issue tracker or ticketing system ID in your PR for context.
 
 ---
 
-## Questions & Support
-
-- Report bugs, suggestions, or issues via [GitHub Issues](https://github.com/arhamkhnz/next-shadcn-admin-dashboard/issues)
-
----
-
-Your contributions keep this project growing. 🚀
-
-**Happy Vibe Coding!**
+Your contributions help strengthen our independent surveillance capabilities! 🚀

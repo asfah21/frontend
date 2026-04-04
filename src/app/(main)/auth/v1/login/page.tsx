@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { VisionCoreLoginForm } from "../../_components/visioncore-login-form";
 
 export const metadata: Metadata = {
-  title: "Login — VisionCore",
-  description: "Masuk ke sistem VisionCore dengan akun Anda.",
+  title: "Login — GAVIS",
+  description: "Masuk ke sistem GAVIS dengan akun Anda.",
 };
 
 export default function LoginV1Page() {
@@ -53,7 +53,7 @@ export default function LoginV1Page() {
           </div> */}
         </div>
         {/* <footer className="absolute bottom-8 text-center text-[10px] uppercase tracking-widest text-muted-foreground/40 lg:hidden">
-           © {new Date().getFullYear()} VisionCore &mdash; Sistem Pemantauan Cerdas
+           © {new Date().getFullYear()} GAVIS &mdash; Sistem Pemantauan Cerdas
         </footer> */}
       </main>
     </div>

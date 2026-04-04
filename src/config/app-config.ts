@@ -7,7 +7,7 @@ export const APP_CONFIG = {
   version: packageJson.version,
   copyright: `© ${currentYear}, GAVIS.`,
   meta: {
-    title: "GAVIS - Modern Next.js Dashboard Starter Template",
+    title: "GAVIS - GSI AI Vision for Intelligent Surveillance",
     description:
       "GAVIS is a modern, open-source dashboard starter template built with Next.js 16, Tailwind CSS v4, and shadcn/ui. Perfect for SaaS apps, admin panels, and internal tools—fully customizable and production-ready.",
   },
