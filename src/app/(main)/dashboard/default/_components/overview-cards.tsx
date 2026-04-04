@@ -168,7 +168,7 @@ export function OverviewCards({ className }: { className?: string }) {
         className,
       )}
     >
-      <Card className="@container/card">
+      <Card className="flex h-full flex-col @container/card">
         <CardHeader>
           <CardTitle>Daily Stats</CardTitle>
         </CardHeader>
@@ -188,7 +188,7 @@ export function OverviewCards({ className }: { className?: string }) {
             </BarChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex items-center justify-between">
+        <CardFooter className="mt-auto flex items-center justify-between">
           <span className={cn("font-bold text-blue-300 text-lg")}> Today </span>
           <span className="font-semibold text-xl tabular-nums">
             {totalToday} <span className="font-normal text-sm">people</span>
@@ -196,7 +196,7 @@ export function OverviewCards({ className }: { className?: string }) {
         </CardFooter>
       </Card>
 
-      <Card className="@container/card">
+      <Card className="flex h-full flex-col @container/card">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Heatmap</CardTitle>
@@ -240,7 +240,7 @@ export function OverviewCards({ className }: { className?: string }) {
             </LineChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex justify-center gap-4 font-medium text-[12px] opacity-60">
+        <CardFooter className="mt-auto flex justify-center gap-4 font-medium text-[12px] opacity-60">
           {/* <div className="flex items-center gap-1">
             <div className="size-1.5 rounded-full bg-[#6366f1]" /> Total
           </div> */}
@@ -253,7 +253,7 @@ export function OverviewCards({ className }: { className?: string }) {
         </CardFooter>
       </Card>
 
-      <Card className="@container/card">
+      <Card className="flex h-full flex-col @container/card">
         <CardHeader>
           <CardDescription>Peak Traffic</CardDescription>
           <CardTitle className="pt-2 pb-1 font-semibold @[250px]/card:text-3xl text-2xl tabular-nums">
@@ -271,13 +271,13 @@ export function OverviewCards({ className }: { className?: string }) {
             </Badge>
           </CardAction>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
+        <CardFooter className="mt-auto flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">Peak Hour: {peakHourInfo.hour}</div>
           <div className="text-muted-foreground">(Highest traffic)</div>
         </CardFooter>
       </Card>
 
-      <Card className="h-full">
+      <Card className="flex h-full flex-col">
         <CardHeader>
           <CardTitle>Live Presence</CardTitle>
         </CardHeader>
