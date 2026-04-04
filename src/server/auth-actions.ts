@@ -39,7 +39,10 @@ export async function loginAction(
 
   cookieStore.set(SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    // Gunakan secure cookie hanya jika di-deploy dengan HTTPS (misalnya flag HTTPS=true)
+    // karena environment internal menggunakan HTTP pada IP 10.10.11.5,
+    // kita set false secara default agar cookie tidak di-reject oleh browser.
+    secure: process.env.NODE_ENV === "production" && process.env.HTTPS === "true",
     sameSite: "lax",
     maxAge: maxAge,
     path: "/",

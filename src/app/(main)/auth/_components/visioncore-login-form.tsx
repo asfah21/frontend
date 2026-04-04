@@ -82,7 +82,7 @@ export function VisionCoreLoginForm() {
             className="h-4 w-4 rounded border-input bg-background text-primary focus:ring-primary/30"
           />
           <label htmlFor="remember" className="cursor-pointer select-none font-medium text-muted-foreground/80 text-sm">
-            Remember me for 30 days
+            remember me
           </label>
         </div>
 
