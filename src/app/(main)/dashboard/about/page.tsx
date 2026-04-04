@@ -14,7 +14,7 @@ export default function AboutPage() {
       {/* Hero Header */}
       <Card className="border-none bg-primary/5 shadow-none">
         <CardContent className="flex flex-col items-center gap-6 p-2 text-center sm:p-4">
-          <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/10">
+          <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/20">
             <Aperture className="h-10 w-10 text-primary" />
           </div>
           <div className="max-w-2xl space-y-2">
@@ -36,14 +36,14 @@ export default function AboutPage() {
               </strong>{" "}
               is an internal innovation initiative developed at Site Wolo, designed as a strategic alternative and
               benchmark to third-party AI-powered CCTV solutions. This project reflects our commitment to building a
-              robust, intelligent,and a fully controlled surveillance system designed to meet the operational needs of
+              robust, intelligent, and fully controlled surveillance system tailored to the operational needs of
               <strong> PT Gunung Samudera Internasional</strong>.
             </p>
             <p>
-              Unlike conventional vendor-based systems, <strong>GAVIS</strong> is developed internally, providing
-              greater flexibility and adaptability. The platform is engineered to align with the specific conditions of
-              our operational environments, allowing us to customize features, detection models, and system behavior
-              based on real field requirements.
+              Unlike conventional third-party systems, <strong>GAVIS</strong> is developed internally, providing greater
+              flexibility and adaptability. The platform is engineered to align with the specific conditions of our
+              operational environments, allowing us to customize features, detection models, and system behavior based
+              on real field requirements.
             </p>
             <p>
               One of the key advantages of <strong>GAVIS</strong> is our ongoing effort to learn and develop the
@@ -54,7 +54,7 @@ export default function AboutPage() {
             <p>
               <strong>GAVIS</strong> is not only a technology solution, but also a strategic step toward strengthening
               internal capabilities, enhancing security intelligence, and supporting data-driven decision-making within
-              the organization.
+              the company.
             </p>
 
             <div className="mt-8 rounded-2xl border-l-4 border-primary bg-primary/5 p-6 pl-8">
@@ -79,8 +79,8 @@ export default function AboutPage() {
               <p className="text-justify text-[15px] leading-relaxed text-muted-foreground">
                 Data security is a primary consideration in this initiative. By maintaining full ownership of the
                 infrastructure and data processing pipeline, <strong> GAVIS </strong>eliminates dependency on
-                third-party vendors, thereby reducing exposure to external risks and ensuring that all surveillance data
-                remains within the company&apos;s secure ecosystem.
+                third-party providers, thereby reducing exposure to external risks and ensuring that all surveillance
+                data remains within the company&apos;s secure ecosystem.
               </p>
             </CardContent>
           </Card>
@@ -96,7 +96,7 @@ export default function AboutPage() {
               <p className="text-justify text-[15px] leading-relaxed text-muted-foreground">
                 In addition, this approach provides long-term efficiency in terms of scalability, cost control, and
                 system integration. The platform can be extended and enhanced in alignment with future operational
-                demands without being constrained by vendor limitations.
+                demands without being constrained by third-party limitations.
               </p>
             </CardContent>
           </Card>
