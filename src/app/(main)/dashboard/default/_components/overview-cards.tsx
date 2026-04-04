@@ -80,14 +80,15 @@ export function OverviewCards({ className }: { className?: string }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [c, d, h] = await Promise.all([
+        const [_c, d, h] = await Promise.all([
           fetch(`${API}/count`).then((r) => r.json()),
           fetch(`${API}/daily`).then((r) => r.json()),
           fetch(`${API}/heatmap`).then((r) => r.json()),
         ]);
 
-        const totalValue = c.total || 0;
-        setTotalToday(totalValue);
+        // Pastikan angka Total Today selaras dengan akumulasi di Heatmap
+        const heatmapTotal = (h || []).reduce((sum: number, item: { count: number }) => sum + item.count, 0);
+        setTotalToday(heatmapTotal);
 
         // Map API daily data to chart format
         const mappedDaily = (d || []).slice(-6).map((item: { date: string; count: number }) => ({

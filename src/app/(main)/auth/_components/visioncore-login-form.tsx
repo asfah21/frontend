@@ -73,7 +73,7 @@ export function VisionCoreLoginForm() {
           </div>
         </div>
 
-        {/* Remember Me */}
+        {/* Remember me */}
         <div className="mb-6 flex items-center gap-2.5 px-0.5">
           <input
             type="checkbox"
@@ -82,7 +82,7 @@ export function VisionCoreLoginForm() {
             className="h-4 w-4 rounded border-input bg-background text-primary focus:ring-primary/30"
           />
           <label htmlFor="remember" className="cursor-pointer select-none font-medium text-muted-foreground/80 text-sm">
-            remember me
+            Remember me
           </label>
         </div>
 

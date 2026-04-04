@@ -36,8 +36,8 @@ export default function AboutPage() {
               </strong>{" "}
               is an internal innovation initiative developed at Site Wolo, designed as a strategic alternative and
               benchmark to third-party AI-powered CCTV solutions. This project reflects our commitment to building a
-              robust, intelligent, and fully controlled surveillance system tailored to the operational needs of our
-              organization.
+              robust, intelligent,and a fully controlled surveillance system designed to meet the operational needs of
+              <strong> PT Gunung Samudera Internasional</strong>.
             </p>
             <p>
               Unlike conventional vendor-based systems, <strong>GAVIS</strong> is developed internally, providing
@@ -46,9 +46,10 @@ export default function AboutPage() {
               based on real field requirements.
             </p>
             <p>
-              One of the key advantages of <strong>GAVIS</strong> is our ability to train and continuously improve our
-              own AI models. This ensures that the system becomes increasingly accurate and context-aware over time,
-              particularly in recognizing patterns, personnel, and activities unique to our sites.
+              One of the key advantages of <strong>GAVIS</strong> is our ongoing effort to learn and develop the
+              capability to train and continuously improve our own AI models. This allows the system to become
+              increasingly accurate and context-aware over time, especially in recognizing patterns, personnel, and
+              activities unique to <strong>PT Gunung Samudera Internasional</strong>.
             </p>
             <p>
               <strong>GAVIS</strong> is not only a technology solution, but also a strategic step toward strengthening
@@ -77,9 +78,9 @@ export default function AboutPage() {
               </div>
               <p className="text-justify text-[15px] leading-relaxed text-muted-foreground">
                 Data security is a primary consideration in this initiative. By maintaining full ownership of the
-                infrastructure and data processing pipeline, <strong>GAVIS</strong> eliminates dependency on third-party
-                vendors, thereby reducing exposure to external risks and ensuring that all surveillance data remains
-                within the company&apos;s secure ecosystem.
+                infrastructure and data processing pipeline, <strong> GAVIS </strong>eliminates dependency on
+                third-party vendors, thereby reducing exposure to external risks and ensuring that all surveillance data
+                remains within the company&apos;s secure ecosystem.
               </p>
             </CardContent>
           </Card>
