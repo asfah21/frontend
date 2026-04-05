@@ -10,7 +10,7 @@ import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
 
-import { leadsChartConfig, leadsChartData } from "./crm.config";
+import { leadsChartConfig } from "./crm.config";
 
 const trafficChartData = [
   { time: "09 AM", total: 10, known: 5, unknown: 0 },
@@ -27,7 +27,7 @@ const trafficChartConfig = {
   unknown: { label: "Unknown", color: "#f97316" },
 };
 
-const lastMonth = format(subMonths(new Date(), 1), "LLLL");
+const _lastMonth = format(subMonths(new Date(), 1), "LLLL");
 
 import { UserCheck, UserMinus, Users } from "lucide-react";
 
@@ -38,6 +38,7 @@ interface Detection {
   person_id: number;
   bbox: { x1: number; y1: number; x2: number; y2: number };
   frame_size: { w: number; h: number };
+  camera_id?: string;
 }
 
 interface DailyData {
@@ -59,7 +60,7 @@ const formatHour = (hour: number) => {
   return `${String(h).padStart(2, "0")} ${ampm}`;
 };
 
-export function OverviewCards({ className }: { className?: string }) {
+export function OverviewCards({ className, cameraId }: { className?: string; cameraId: string }) {
   const [liveDetections, setLiveDetections] = useState<Detection[]>([]);
   const [totalToday, setTotalToday] = useState(0);
   const [dailyData, setDailyData] = useState<DailyData[]>([]);
@@ -73,9 +74,9 @@ export function OverviewCards({ className }: { className?: string }) {
     const fetchData = async () => {
       try {
         const [_c, d, h] = await Promise.all([
-          fetch(`${API}/count`).then((r) => r.json()),
-          fetch(`${API}/daily`).then((r) => r.json()),
-          fetch(`${API}/heatmap`).then((r) => r.json()),
+          fetch(`${API}/count?camera_id=${cameraId}`).then((r) => r.json()),
+          fetch(`${API}/daily?camera_id=${cameraId}`).then((r) => r.json()),
+          fetch(`${API}/heatmap?camera_id=${cameraId}`).then((r) => r.json()),
         ]);
 
         // Pastikan angka Total Today selaras dengan akumulasi di Heatmap
@@ -129,7 +130,11 @@ export function OverviewCards({ className }: { className?: string }) {
           if (yesterday > 0) {
             const perc = ((today - yesterday) / yesterday) * 100;
             setGrowth(Number(perc.toFixed(1)));
+          } else {
+            setGrowth(0);
           }
+        } else {
+          setGrowth(0);
         }
       } catch (err) {
         console.error("API ERROR:", err);
@@ -139,16 +144,18 @@ export function OverviewCards({ className }: { className?: string }) {
     fetchData();
     const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [cameraId]);
 
   useEffect(() => {
     const handleDetections = (e: Event) => {
-      const detail = (e as CustomEvent).detail || [];
-      setLiveDetections(detail);
+      const detail = ((e as CustomEvent).detail || []) as Detection[];
+      // Filter live detections for the current camera
+      const filtered = detail.filter((d) => d.camera_id === cameraId || !d.camera_id);
+      setLiveDetections(filtered);
     };
     window.addEventListener("ai:detections", handleDetections);
     return () => window.removeEventListener("ai:detections", handleDetections);
-  }, []);
+  }, [cameraId]);
 
   const peopleCount = liveDetections.length;
   const facesCount = liveDetections.filter((d) => d.name && d.name !== "Unknown").length;
@@ -166,9 +173,9 @@ export function OverviewCards({ className }: { className?: string }) {
         </CardHeader>
         <CardContent>
           <ChartContainer className="h-18 w-full" config={leadsChartConfig}>
-            <BarChart accessibilityLayer data={dailyData.length > 0 ? dailyData : leadsChartData} barSize={8}>
+            <BarChart accessibilityLayer data={dailyData} barSize={8}>
               <XAxis dataKey="date" tickLine={false} tickMargin={10} axisLine={false} hide />
-              <ChartTooltip content={<ChartTooltipContent labelFormatter={(label) => `${lastMonth}: ${label}`} />} />
+              <ChartTooltip content={<ChartTooltipContent labelFormatter={(label) => `Date: ${label}`} />} />
               <Bar
                 background={{ fill: "var(--color-background)", radius: 2, opacity: 0.07 }}
                 dataKey="newLeads"

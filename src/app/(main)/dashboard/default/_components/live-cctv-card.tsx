@@ -2,26 +2,74 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Camera, Circle, Maximize, Minimize, ShieldAlert } from "lucide-react";
+import { Check, ChevronsUpDown, Circle, Maximize, Minimize, ShieldAlert } from "lucide-react";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardAction, CardContent, CardHeader } from "@/components/ui/card";
+import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+
+const CAMERAS = [
+  {
+    value: "cam1",
+    label: "Cam 1",
+    description: "Ruang Tengah",
+    url: "http://10.10.11.5:1984/stream.html?src=cam1",
+  },
+  {
+    value: "cam2",
+    label: "Cam 2",
+    description: "Ruang Makan",
+    url: "http://10.10.11.5:1984/stream.html?src=cam2",
+  },
+  {
+    value: "cam3",
+    label: "Cam 3",
+    description: "Ruang Meeting",
+    url: "http://10.10.11.5:1984/stream.html?src=cam3",
+  },
+];
 
 type Detection = {
   bbox: { x1: number; y1: number; x2: number; y2: number };
   name: string;
   person_id: number;
   frame_size: { w: number; h: number };
+  camera_id?: string;
 };
 
-export function LiveCctvCard({ className }: { className?: string }) {
+export function LiveCctvCard({
+  className,
+  selectedCam,
+  onCamChange,
+}: {
+  className?: string;
+  selectedCam: string;
+  onCamChange: (val: string) => void;
+}) {
   const [detections, setDetections] = useState<Detection[]>([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [camStatus, setCamStatus] = useState<Record<string, boolean>>({});
   const [isFullscreen, setIsFullscreen] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const selectedCamRef = useRef(selectedCam);
+  const camTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
+  selectedCamRef.current = selectedCam;
+
+  useEffect(() => {
+    const saved = localStorage.getItem("visioncore:selectedCam");
+    if (saved && saved !== selectedCam) onCamChange(saved);
+  }, [onCamChange, selectedCam]);
+
+  const handleCamChange = (val: string) => {
+    onCamChange(val);
+    setDetections([]);
+    localStorage.setItem("visioncore:selectedCam", val);
+  };
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -45,31 +93,62 @@ export function LiveCctvCard({ className }: { className?: string }) {
 
   // ===== WEBSOCKET =====
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
     const ws = new WebSocket("ws://10.10.11.5:3001/ws");
 
     ws.onopen = () => setIsConnected(true);
-    ws.onclose = () => setIsConnected(false);
+    ws.onclose = () => {
+      setIsConnected(false);
+      setCamStatus({});
+    };
 
     ws.onmessage = (event) => {
-      // SETIAP ADA DATA MASUK, RESET TIMER PEMBERSIHAN
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        setDetections([]); // Kosongkan layar jika 1.5 detik tidak ada update
-        window.dispatchEvent(new CustomEvent("ai:detections", { detail: [] }));
-      }, 1500);
-
       try {
         const data = JSON.parse(event.data);
 
-        // 🔥 DUKUNG BATCH DETECTIONS SESUAI REFERENSI
+        // Ambil ID kamera dari root, atau dari deteksi pertama
+        let camCode = data.camera_id;
+        if (
+          !camCode &&
+          data.event === "person_detect_batch" &&
+          Array.isArray(data.detections) &&
+          data.detections.length > 0
+        ) {
+          camCode = data.detections[0].camera_id;
+        }
+
+        // --- MANAJEMEN STATUS ONLINE/OFFLINE PER KAMERA ---
+        if (camCode) {
+          setCamStatus((prev) => {
+            if (!prev[camCode]) return { ...prev, [camCode]: true };
+            return prev;
+          });
+
+          if (camTimeoutsRef.current[camCode]) {
+            clearTimeout(camTimeoutsRef.current[camCode]);
+          }
+
+          camTimeoutsRef.current[camCode] = setTimeout(() => {
+            setCamStatus((prev) => ({ ...prev, [camCode]: false }));
+            if (selectedCamRef.current === camCode) {
+              setDetections([]);
+              window.dispatchEvent(new CustomEvent("ai:detections", { detail: [] }));
+            }
+          }, 1500); // 1.5 detik tidak ada update untuk kamera ini = kosongkan & offline
+        }
+
+        // --- MANAJEMEN DETEKSI (GAMBAR BOX) ---
         if (data.event === "person_detect_batch" && Array.isArray(data.detections)) {
-          setDetections(data.detections);
-          window.dispatchEvent(new CustomEvent("ai:detections", { detail: data.detections }));
+          if (camCode === selectedCamRef.current || !camCode) {
+            const filtered = data.detections.filter((d: any) => d.camera_id === selectedCamRef.current);
+            setDetections(filtered);
+            window.dispatchEvent(new CustomEvent("ai:detections", { detail: filtered }));
+          }
         } else if (data.event === "person_detect") {
-          const single = [data];
-          setDetections(single);
-          window.dispatchEvent(new CustomEvent("ai:detections", { detail: single }));
+          if (data.camera_id === selectedCamRef.current) {
+            const single = [data];
+            setDetections(single);
+            window.dispatchEvent(new CustomEvent("ai:detections", { detail: single }));
+          }
         }
       } catch (e) {
         console.error("Failed to parse websocket data", e);
@@ -78,7 +157,7 @@ export function LiveCctvCard({ className }: { className?: string }) {
 
     return () => {
       ws.close();
-      clearTimeout(timeout);
+      Object.values(camTimeoutsRef.current).forEach(clearTimeout);
     };
   }, []);
 
@@ -181,25 +260,31 @@ export function LiveCctvCard({ className }: { className?: string }) {
     };
   }, [detections]);
 
+  const isCamOnline = isConnected && camStatus[selectedCam] !== false;
+
   return (
-    <Card className={cn("flex flex-col overflow-hidden pb-[11px]", className)}>
+    <Card className={cn("flex flex-col overflow-hidden pb-[2px]", className)}>
       <CardHeader>
-        <div className="flex items-center gap-2">
-          <Camera className="size-5 text-primary" />
-          <CardTitle className="grow">Cam 01</CardTitle>
-          <CardAction>
+        <div className="flex items-center gap-1">
+          <div className="grow">
+            <CameraSelect value={selectedCam} onChange={handleCamChange} />
+          </div>
+
+          <CardAction className="flex items-center pt-2">
             <Badge
-              variant={isConnected ? "outline" : "destructive"}
-              className={cn("gap-1", isConnected && "border-green-500/30 bg-green-500/10 text-green-500")}
+              variant={isCamOnline ? "outline" : "destructive"}
+              className={cn(
+                "flex items-center gap-1",
+                isCamOnline && "border-green-500/30 bg-green-500/10 text-green-500",
+              )}
             >
               <Circle
-                className={cn("size-2 animate-pulse fill-current", isConnected ? "text-green-500" : "text-destructive")}
+                className={cn("size-2 animate-pulse fill-current", isCamOnline ? "text-green-500" : "text-destructive")}
               />
-              {isConnected ? "Online" : "Offline"}
+              {isCamOnline ? "Online" : "Offline"}
             </Badge>
           </CardAction>
         </div>
-        {/* <CardDescription></CardDescription> */}
       </CardHeader>
 
       <CardContent className="relative flex-grow overflow-hidden bg-black p-0">
@@ -213,7 +298,7 @@ export function LiveCctvCard({ className }: { className?: string }) {
               className="absolute inset-0 z-10 h-full w-full"
             >
               <iframe
-                src="http://10.10.11.5:1984/stream.html?src=cam1"
+                src={CAMERAS.find((c) => c.value === selectedCam)?.url || CAMERAS[0].url}
                 className="h-full w-full border-none grayscale-[0.1] transition-all group-hover:grayscale-0"
                 title="CCTV Stream"
                 allow="autoplay"
@@ -234,7 +319,7 @@ export function LiveCctvCard({ className }: { className?: string }) {
                 style={{ width: "100%", height: "100%", display: "block" }}
               />
 
-              {!isConnected && (
+              {!isCamOnline && (
                 <div className="absolute inset-0 z-[120] flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm">
                   <ShieldAlert className="mb-2 size-10 text-destructive" />
                   <p className="font-bold text-base text-white">Connection Lost</p>
@@ -246,5 +331,52 @@ export function LiveCctvCard({ className }: { className?: string }) {
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function CameraSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-[180px] justify-between">
+          <div className="flex items-center gap-2">
+            <div
+              className="size-2 rounded-full bg-primary"
+              style={{
+                boxShadow: "0 0 8px color-mix(in oklab, var(--primary) 50%, transparent)",
+              }}
+            />
+            {CAMERAS.find((cam) => cam.value === value)?.label}
+          </div>
+          <ChevronsUpDown className="opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[180px] p-0">
+        <Command>
+          <CommandList>
+            <CommandGroup>
+              {CAMERAS.map((cam) => (
+                <CommandItem
+                  key={cam.value}
+                  value={cam.value}
+                  onSelect={(currentValue) => {
+                    onChange(currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  <div className="flex flex-col">
+                    <span>{cam.label}</span>
+                    <span className="text-muted-foreground text-xs">{cam.description}</span>
+                  </div>
+                  <Check className={cn("ml-auto", value === cam.value ? "opacity-100" : "opacity-0")} />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 }
