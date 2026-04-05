@@ -28,7 +28,7 @@ const CAMERAS = [
   {
     value: "cam3",
     label: "Cam 3",
-    description: "Ruang Meeting",
+    description: "Teras Office 1",
     url: "http://10.10.11.5:1984/stream.html?src=cam3",
   },
 ];

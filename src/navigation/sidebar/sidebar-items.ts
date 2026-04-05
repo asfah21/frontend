@@ -1,4 +1,4 @@
-import { Gauge, Info, LayoutDashboard, type LucideIcon, Users } from "lucide-react";
+import { Gauge, Info, LayoutDashboard, type LucideIcon } from "lucide-react";
 
 export interface NavSubItem {
   title: string;
@@ -102,12 +102,12 @@ export const sidebarItems: NavGroup[] = [
       //   icon: ReceiptText,
       //   comingSoon: true,
       // },
-      {
-        title: "Users",
-        url: "/dashboard/coming-soon",
-        icon: Users,
-        comingSoon: true,
-      },
+      // {
+      //   title: "Users",
+      //   url: "/dashboard/coming-soon",
+      //   icon: Users,
+      //   comingSoon: true,
+      // },
       {
         title: "About",
         url: "/dashboard/about",
